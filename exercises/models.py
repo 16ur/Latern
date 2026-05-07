@@ -12,6 +12,8 @@ class Domain(models.Model):
 
 
 class Exercise(models.Model):
+    objects: models.Manager["Exercise"] = models.Manager()
+
     domain = models.ForeignKey(
         Domain, on_delete=models.CASCADE, related_name="exercises"
     )
