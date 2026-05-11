@@ -2,7 +2,13 @@ from django.shortcuts import get_object_or_404
 from ninja import Router
 
 from .models import Exercise, Attempt
-from .schemas import ExerciseOut, ExerciseAttemptIn, ExerciseAttemptOut
+from .schemas import (
+    ErrorOut,
+    ExerciseAttemptIn,
+    ExerciseAttemptOut,
+    ExerciseOut,
+    ProgressOut,
+)
 from .services.latex_validation import normalize_latex
 
 router = Router()
@@ -64,14 +70,18 @@ def attempt_exercise(request, exercise_id: int, payload: ExerciseAttemptIn):
     }
 
 
-@router.get("/me/progress")
-def get_my_progress(request) -> dict:
-    attempts = Attempt.objects.all()
+@router.get("/me/progress", response={200: ProgressOut, 401: ErrorOut})
+def get_my_progress(request):
+    if not request.user.is_authenticated:
+        return 401, {"detail": "Authentication required"}
+
+    attempts = Attempt.objects.filter(user=request.user)
 
     total_attempts = attempts.count()
     correct_attempts = attempts.filter(is_correct=True).count()
     completed_exercise_ids = (
-        attempts.filter(is_correct=True)
+        attempts
+        .filter(is_correct=True)
         .values_list("exercise_id", flat=True)
         .distinct()
     )
@@ -79,6 +89,6 @@ def get_my_progress(request) -> dict:
     return {
         "total_attempts": total_attempts,
         "correct_attempts": correct_attempts,
-        "success_rate": correct_attempts / total_attempts if total_attempts > 0 else 0,
+        "success_rate": correct_attempts / total_attempts if total_attempts else 0,
         "completed_exercise_ids": list(completed_exercise_ids),
     }

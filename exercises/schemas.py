@@ -16,3 +16,14 @@ class ExerciseAttemptIn(Schema):
 
 class ExerciseAttemptOut(Schema):
     correct: bool
+
+
+class ErrorOut(Schema):
+    detail: str
+
+
+class ProgressOut(Schema):
+    total_attempts: int
+    correct_attempts: int
+    success_rate: float
+    completed_exercise_ids: list[int]
