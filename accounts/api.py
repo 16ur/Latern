@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from ninja import Router, Schema
 
 from latern_back.schemas import ErrorOut
+from .schemas import AuthSuccessOut
 
 router = Router()
 
@@ -38,7 +39,7 @@ def register(request, payload: RegisterIn):
     return 201, user
 
 
-@router.post("/login")
+@router.post("/login", response={200:AuthSuccessOut, 401: ErrorOut})
 def login_user(request, payload: LoginIn):
     user = authenticate(
         request,
@@ -47,7 +48,7 @@ def login_user(request, payload: LoginIn):
     )
 
     if user is None:
-        return {"success": False, "error": "Invalid credentials"}
+        return 401, {"detail": "Invalid credentials"}
 
     login(request, user)
     return {"success": True}
