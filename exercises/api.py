@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from ninja import Router
 
-from .models import Exercise
+from .models import Exercise, Attempt
 from .schemas import ExerciseOut, ExerciseAttemptIn, ExerciseAttemptOut
 from .services.latex_validation import normalize_latex
 
@@ -51,4 +51,14 @@ def attempt_exercise(request, exercise_id: int, payload: ExerciseAttemptIn):
         if isinstance(accepted_answer, str)
     ]
 
-    return {"correct": normalized_answer in accepted_answers}
+    is_correct = normalized_answer in accepted_answers
+    Attempt.objects.create(
+        exercise=exercise,
+        user=request.user if request.user.is_authenticated else None,
+        submitted_answer=payload.answer,
+        is_correct=is_correct,
+    )
+
+    return {
+        "correct": is_correct,
+    }

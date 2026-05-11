@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 # Create your models here.
@@ -29,3 +30,27 @@ class Exercise(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Attempt(models.Model):
+    objects: models.Manager["Attempt"] = models.Manager()
+
+    exercise = models.ForeignKey(
+        Exercise,
+        on_delete=models.CASCADE,
+        related_name="attempts",
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="attempts",
+        null=True,
+        blank=True,
+    )
+    submitted_answer = models.TextField()
+    is_correct = models.BooleanField()
+    used_hints_count = models.PositiveSmallIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.exercise} - {'correct' if self.is_correct else 'wrong'}"
