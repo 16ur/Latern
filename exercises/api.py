@@ -62,3 +62,23 @@ def attempt_exercise(request, exercise_id: int, payload: ExerciseAttemptIn):
     return {
         "correct": is_correct,
     }
+
+
+@router.get("/me/progress")
+def get_my_progress(request) -> dict:
+    attempts = Attempt.objects.all()
+
+    total_attempts = attempts.count()
+    correct_attempts = attempts.filter(is_correct=True).count()
+    completed_exercise_ids = (
+        attempts.filter(is_correct=True)
+        .values_list("exercise_id", flat=True)
+        .distinct()
+    )
+
+    return {
+        "total_attempts": total_attempts,
+        "correct_attempts": correct_attempts,
+        "success_rate": correct_attempts / total_attempts if total_attempts > 0 else 0,
+        "completed_exercise_ids": list(completed_exercise_ids),
+    }
