@@ -24,14 +24,18 @@ class UserOut(Schema):
     email: str
 
 
-@router.post("/register", response=UserOut)
+@router.post("/register", response={201: UserOut, 400: ErrorOut})
 def register(request, payload: RegisterIn):
+    if User.objects.filter(username=payload.username).exists():
+        return 400, {"detail": "Username already taken"}
+
     user = User.objects.create_user(
         username=payload.username,
         email=payload.email,
         password=payload.password,
     )
-    return user
+
+    return 201, user
 
 
 @router.post("/login")
