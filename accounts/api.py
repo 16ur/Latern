@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from ninja import Router, Schema
 
+from latern_back.schemas import ErrorOut
+
 router = Router()
 
 
@@ -53,9 +55,13 @@ def logout_user(request):
     return {"success": True}
 
 
-@router.get("/me", response=UserOut)
+@router.get("/me", response={200: UserOut, 401: ErrorOut})
 def me(request):
     if not request.user.is_authenticated:
         return 401, {"detail": "Authentication required"}
 
-    return request.user
+    return {
+        "id": request.user.id,
+        "username": request.user.username,
+        "email": request.user.email,
+    }

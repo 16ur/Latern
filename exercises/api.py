@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404
 from ninja import Router
 
+from latern_back.schemas import ErrorOut
+
 from .models import Exercise, Attempt
 from .schemas import (
-    ErrorOut,
     ExerciseAttemptIn,
     ExerciseAttemptOut,
     ExerciseOut,
@@ -80,8 +81,7 @@ def get_my_progress(request):
     total_attempts = attempts.count()
     correct_attempts = attempts.filter(is_correct=True).count()
     completed_exercise_ids = (
-        attempts
-        .filter(is_correct=True)
+        attempts.filter(is_correct=True)
         .values_list("exercise_id", flat=True)
         .distinct()
     )

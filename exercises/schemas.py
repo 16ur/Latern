@@ -18,10 +18,6 @@ class ExerciseAttemptOut(Schema):
     correct: bool
 
 
-class ErrorOut(Schema):
-    detail: str
-
-
 class ProgressOut(Schema):
     total_attempts: int
     correct_attempts: int
