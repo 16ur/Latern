@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16
+    container_name: latern_db
+    environment:
+      POSTGRES_DB: latern
+      POSTGRES_USER: latern
+      POSTGRES_PASSWORD: latern
+    ports:
+      - "5432:5432"
+    volumes:
+      - latern_postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: latern_backend
+    command: uv run python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_DB_NAME: latern
+      DJANGO_DB_USER: latern
+      DJANGO_DB_PASSWORD: latern
+      DJANGO_DB_HOST: db
+      DJANGO_DB_PORT: 5432
+    depends_on:
+      - db
+
+volumes:
+  latern_postgres_data:

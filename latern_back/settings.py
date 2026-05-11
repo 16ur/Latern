@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,8 +77,12 @@ WSGI_APPLICATION = "latern_back.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DJANGO_DB_NAME", "latern"),
+        "USER": os.getenv("DJANGO_DB_USER", "latern"),
+        "PASSWORD": os.getenv("DJANGO_DB_PASSWORD", "latern"),
+        "HOST": os.getenv("DJANGO_DB_HOST", "localhost"),
+        "PORT": os.getenv("DJANGO_DB_PORT", "5432"),
     }
 }
 
