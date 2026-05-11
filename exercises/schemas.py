@@ -16,6 +16,7 @@ class ExerciseAttemptIn(Schema):
 
 class ExerciseAttemptOut(Schema):
     correct: bool
+    saved_to_progress: bool
 
 
 class ProgressOut(Schema):

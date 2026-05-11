@@ -59,15 +59,17 @@ def attempt_exercise(request, exercise_id: int, payload: ExerciseAttemptIn):
     ]
 
     is_correct = normalized_answer in accepted_answers
-    Attempt.objects.create(
-        exercise=exercise,
-        user=request.user if request.user.is_authenticated else None,
-        submitted_answer=payload.answer,
-        is_correct=is_correct,
-    )
+    if request.user.is_authenticated:
+        Attempt.objects.create(
+            exercise=exercise,
+            user=request.user,
+            submitted_answer=payload.answer,
+            is_correct=is_correct,
+        )
 
     return {
         "correct": is_correct,
+        "saved_to_progress": request.user.is_authenticated,
     }
 
 
