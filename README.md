@@ -10,7 +10,7 @@ Instead of learning LaTeX syntax by reading documentation, users learn by practi
 
 ### Backend
 
-* Python 3.12
+* Python 3.13
 * Django
 * Django Ninja
 * PostgreSQL
@@ -42,7 +42,7 @@ Make sure you have installed:
 
 ```bash
 git clone <repository-url>
-cd latern-back
+cd latern
 ```
 
 ---

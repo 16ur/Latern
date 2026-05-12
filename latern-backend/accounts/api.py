@@ -39,7 +39,7 @@ def register(request, payload: RegisterIn):
     return 201, user
 
 
-@router.post("/login", response={200:AuthSuccessOut, 401: ErrorOut})
+@router.post("/login", response={200: AuthSuccessOut, 401: ErrorOut})
 def login_user(request, payload: LoginIn):
     user = authenticate(
         request,
