@@ -28,5 +28,15 @@ services:
     depends_on:
       - db
 
+  frontend:
+    build: ./latern-frontend
+    container_name: latern_frontend
+    command: bun run dev --hostname 0.0.0.0
+    volumes:
+      - ./latern-frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+
 volumes:
   latern_postgres_data:
