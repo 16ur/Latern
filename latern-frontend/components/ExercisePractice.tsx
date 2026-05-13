@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { listExercises, submitExerciseAttempt } from "@/lib/api";
 import type { Exercise, ExerciseAttempt } from "@/types/exercise";
@@ -48,11 +48,6 @@ export function ExercisePractice() {
   }, []);
 
   const currentExercise = exercises[currentIndex];
-  const domains = useMemo(
-    () => Array.from(new Set(exercises.map((exercise) => exercise.domain))),
-    [exercises],
-  );
-
   async function handleSubmit() {
     if (!currentExercise || !answer.trim()) {
       return;
@@ -204,7 +199,7 @@ function PracticeHeader({
   completedCount,
   domain,
   difficulty,
-  title
+  title,
 }: {
   currentIndex: number;
   total: number;
@@ -213,24 +208,69 @@ function PracticeHeader({
   difficulty?: number;
   title?: string;
 }) {
+  const currentPosition = total > 0 ? currentIndex + 1 : 0;
+  const progressValue = total > 0 ? Math.round((currentPosition / total) * 100) : 0;
+
   return (
-    <div className="flex items-start justify-between gap-4">
-      <div>
-        <h1 className="mt-2 text-3xl font-semibold tracking-normal text-stone-950 sm:text-3xl">
-          {title}
-        </h1>
-        <div className="flex flex-wrap items-center gap-2 text-xs text-stone-500">
-          <span className="rounded-full bg-stone-100 px-3 py-1 font-medium text-stone-700">
-            {domain ?? "Practice"}
-          </span>
-          {difficulty ? <span>Level {difficulty}</span> : null}
+    <div className="rounded-2xl border border-stone-200 bg-stone-50/80 p-4 sm:p-5">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2 text-xs font-medium">
+            <span className="rounded-full bg-emerald-100 px-3 py-1 text-emerald-800">
+              Practice session
+            </span>
+            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-stone-600">
+              {domain ?? "General"}
+            </span>
+            {difficulty ? (
+              <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-stone-600">
+                Level {difficulty}
+              </span>
+            ) : null}
+          </div>
+
+          <h1 className="mt-4 text-balance text-3xl font-semibold tracking-normal text-stone-950 sm:text-4xl">
+            {title ?? "Choose an exercise"}
+          </h1>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-stone-600">
+            Match the target expression, compare the render, and move forward
+            once your syntax is precise.
+          </p>
         </div>
-      </div>
-      <div className="text-right text-xs text-stone-500">
-        <p>
-          {total > 0 ? currentIndex + 1 : 0} / {total}
-        </p>
-        <p className="mt-1 text-emerald-700">{completedCount} completed</p>
+
+        <div className="w-full rounded-2xl border border-stone-200 bg-white p-4 shadow-sm lg:w-64">
+          <div className="flex items-end justify-between gap-3">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-stone-500">
+                Exercise
+              </p>
+              <p className="mt-1 text-2xl font-semibold text-stone-950">
+                {currentPosition}
+                <span className="ml-1 text-base font-medium text-stone-400">
+                  / {total}
+                </span>
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-stone-500">
+                Completed
+              </p>
+              <p className="mt-1 text-lg font-semibold text-emerald-700">
+                {completedCount}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 h-2 rounded-full bg-stone-100">
+            <div
+              className="h-2 rounded-full bg-emerald-700 transition-[width]"
+              style={{ width: `${progressValue}%` }}
+            />
+          </div>
+          <p className="mt-2 text-xs text-stone-500">
+            {progressValue}% through the loaded set
+          </p>
+        </div>
       </div>
     </div>
   );
