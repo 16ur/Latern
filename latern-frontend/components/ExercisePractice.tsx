@@ -192,12 +192,6 @@ export function ExercisePractice() {
               Next exercise
             </button>
           </div>
-
-          {domains.length > 0 ? (
-            <p className="text-xs text-stone-500">
-              Available domains: {domains.join(", ")}
-            </p>
-          ) : null}
         </div>
       ) : null}
     </section>
