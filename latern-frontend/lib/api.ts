@@ -1,5 +1,6 @@
 import type { Exercise, ExerciseAttempt } from "@/types/exercise";
 import type { AuthSuccess, User } from "@/types/auth";
+import type { Progress } from "@/types/progress";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "/api";
 
@@ -112,4 +113,23 @@ export async function getCurrentUser(): Promise<User | null> {
   }
 
   return response.json() as Promise<User>;
+}
+
+export async function getMyProgress(): Promise<Progress> {
+  const response = await fetch(`${API_BASE_URL}/me/progress`, {
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.status === 401) {
+    throw new Error("Authentication required");
+  }
+
+  if (!response.ok) {
+    throw new Error("Unable to load progress right now.");
+  }
+
+  return response.json() as Promise<Progress>;
 }

@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 
 type SiteHeaderProps = {
-  active?: "home" | "practice";
+  active?: "home" | "practice" | "progress";
 };
 
 export function SiteHeader({ active }: SiteHeaderProps) {
@@ -80,6 +80,14 @@ export function SiteHeader({ active }: SiteHeaderProps) {
           >
             Practice
           </Link>
+          {isAuthenticated ? (
+            <Link
+              className={active === "progress" ? "text-stone-950" : undefined}
+              href="/progress"
+            >
+              Progress
+            </Link>
+          ) : null}
           <Link href="/#domains">Domains</Link>
         </nav>
         <div className="flex items-center gap-3">
