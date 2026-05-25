@@ -2,13 +2,6 @@ export function HeroSection() {
   return (
     <section className="grid gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,1fr)] lg:items-center">
       <div className="flex flex-col gap-8">
-        <div className="flex items-center gap-3 text-sm text-stone-600">
-          <span className="rounded-full bg-sky-100 px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-sky-700">
-            New
-          </span>
-          <span>Learn LaTeX math, one symbol at a time.</span>
-        </div>
-
         <div className="max-w-2xl">
           <h1 className="text-balance text-5xl font-semibold leading-[1.02] tracking-normal text-stone-950 sm:text-6xl">
             Type the math you already know how to read.
@@ -23,7 +16,7 @@ export function HeroSection() {
         <div className="flex flex-col gap-3 sm:flex-row">
           <a
             href="/practice"
-            className="inline-flex h-11 items-center justify-center rounded-lg bg-emerald-700 px-5 text-sm font-medium text-white transition hover:bg-emerald-800"
+            className="inline-flex h-11 items-center justify-center rounded-lg bg-[#008080] px-5 text-sm font-medium text-white transition hover:bg-[#006666]"
           >
             Start practicing
           </a>

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+
 
 type SiteHeaderProps = {
   active?: "home" | "practice";
@@ -9,10 +11,12 @@ export function SiteHeader({ active = "home" }: SiteHeaderProps) {
     <header className="border-b border-stone-200/80 bg-stone-50/90">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-5 sm:px-8">
         <Link href="/" className="flex items-center gap-2 font-semibold">
-          <span className="grid size-7 place-items-center rounded-md bg-emerald-700 text-sm text-white">
-            L
-          </span>
-          <span>Latern</span>
+          <Image
+            src="/LATERN_TYPO_BY_MH.svg"
+            alt="Latern logo"
+            width={80}
+            height={80}
+          />
         </Link>
         <nav className="hidden items-center gap-7 text-sm text-stone-600 md:flex">
           <Link

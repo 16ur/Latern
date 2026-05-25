@@ -141,7 +141,7 @@ export function ExercisePractice() {
                 setAttempt(null);
                 setSubmitError(null);
               }}
-              className="mt-2 min-h-24 w-full resize-y rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 font-mono text-sm leading-6 text-stone-950 outline-none transition placeholder:text-stone-400 focus:border-emerald-700 focus:bg-white focus:ring-4 focus:ring-emerald-700/10"
+              className="mt-2 min-h-24 w-full resize-y rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 font-mono text-sm leading-6 text-stone-950 outline-none transition placeholder:text-stone-400 focus:border-[#008080] focus:bg-white focus:ring-4 focus:ring-[#008080]/10"
               spellCheck={false}
             />
           </label>
@@ -175,7 +175,7 @@ export function ExercisePractice() {
               type="button"
               onClick={handleSubmit}
               disabled={isSubmitting || !answer.trim()}
-              className="inline-flex h-11 items-center justify-center rounded-lg bg-emerald-700 px-5 text-sm font-medium text-white transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:bg-stone-300"
+              className="inline-flex h-11 items-center justify-center rounded-lg bg-[#008080] px-5 text-sm font-medium text-white transition hover:bg-[#006666] disabled:cursor-not-allowed disabled:bg-stone-300"
             >
               {isSubmitting ? "Checking..." : "Check answer"}
             </button>
@@ -216,7 +216,7 @@ function PracticeHeader({
       <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2 text-xs font-medium">
-            <span className="rounded-full bg-emerald-100 px-3 py-1 text-emerald-800">
+            <span className="rounded-full bg-[#008080]/10 px-3 py-1 text-[#008080]">
               Practice session
             </span>
             <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-stone-600">
@@ -255,7 +255,7 @@ function PracticeHeader({
               <p className="text-[11px] font-semibold uppercase tracking-wide text-stone-500">
                 Completed
               </p>
-              <p className="mt-1 text-lg font-semibold text-emerald-700">
+              <p className="mt-1 text-lg font-semibold text-[#008080]">
                 {completedCount}
               </p>
             </div>
@@ -263,7 +263,7 @@ function PracticeHeader({
 
           <div className="mt-4 h-2 rounded-full bg-stone-100">
             <div
-              className="h-2 rounded-full bg-emerald-700 transition-[width]"
+              className="h-2 rounded-full bg-[#008080] transition-[width]"
               style={{ width: `${progressValue}%` }}
             />
           </div>
