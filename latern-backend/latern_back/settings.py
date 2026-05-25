@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "latern_back.middleware.ApiSessionCookieMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -51,6 +52,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+API_SESSION_COOKIE_NAME = os.getenv(
+    "DJANGO_API_SESSION_COOKIE_NAME",
+    "latern_api_sessionid",
+)
+API_SESSION_COOKIE_PATH = os.getenv("DJANGO_API_SESSION_COOKIE_PATH", "/api")
 
 ROOT_URLCONF = "latern_back.urls"
 

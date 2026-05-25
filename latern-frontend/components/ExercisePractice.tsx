@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 
 import { listExercises, submitExerciseAttempt } from "@/lib/api";
 import type { Exercise, ExerciseAttempt } from "@/types/exercise";
+import { useAuth } from "@/components/AuthProvider";
 import { LatexPreview } from "@/components/LatexPreview";
 
 type LoadState = "idle" | "loading" | "ready" | "empty" | "error";
 
 export function ExercisePractice() {
+  const { user, isAuthenticated, isLoading } = useAuth();
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [loadState, setLoadState] = useState<LoadState>("idle");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -90,6 +92,7 @@ export function ExercisePractice() {
         difficulty={currentExercise?.difficulty}
         title={currentExercise?.title}
       />
+
 
       {loadState === "loading" || loadState === "idle" ? (
         <PracticeMessage title="Loading exercises" />
