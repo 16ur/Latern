@@ -1,3 +1,5 @@
+<img width="2820" height="1514" alt="landing_latern" src="https://github.com/user-attachments/assets/6d9efeb7-5f06-4cb1-a589-d22059921862" />
+
 # Latern
 
 Latern is an educational platform designed to help students and beginners learn how to write mathematical expressions using LaTeX.
